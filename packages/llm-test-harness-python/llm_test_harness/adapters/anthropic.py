@@ -53,7 +53,7 @@ def _response_to_cassette(resp: Any) -> CassetteResponse:
     if hasattr(resp, "content") and resp.content:
         content = []
         for b in resp.content:
-            block_type = getattr(b, "type", None)
+            block_type: str = getattr(b, "type", "text") or "text"
             text = getattr(b, "text", None)
             bid = getattr(b, "id", None)
             name = getattr(b, "name", None)

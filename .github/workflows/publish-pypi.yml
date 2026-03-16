@@ -11,7 +11,7 @@ jobs:
     runs-on: ubuntu-latest
     permissions:
       contents: read
-      id-token: write   # for Trusted Publishing (OIDC)
+      id-token: write   # for Trusted Publishing (OIDC) — no API token needed
 
     steps:
       - uses: actions/checkout@v4
@@ -20,20 +20,40 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install build tools
-        run: pip install build hatchling
+      - name: Install build + dev deps
+        working-directory: packages/llm-test-harness-python
+        run: |
+          pip install build hatchling
+          pip install -e ".[dev]"
 
       - name: Run tests
         working-directory: packages/llm-test-harness-python
-        run: |
-          pip install -e ".[dev]"
-          pytest tests/ -v --tb=short
+        run: pytest tests/ -v --tb=short
 
-      - name: Build distribution
+      - name: Type check
+        working-directory: packages/llm-test-harness-python
+        run: mypy llm_test_harness/
+
+      - name: Build distributions
         working-directory: packages/llm-test-harness-python
         run: python -m build
 
+      - name: Verify wheel contents
+        working-directory: packages/llm-test-harness-python
+        run: |
+          pip install twine
+          twine check dist/*
+          python -c "
+          import zipfile, sys
+          wheel = next(f for f in __import__('os').listdir('dist') if f.endswith('.whl'))
+          with zipfile.ZipFile(f'dist/{wheel}') as z:
+              names = z.namelist()
+          assert any('py.typed' in n for n in names), 'py.typed missing from wheel'
+          assert any('README' in n for n in names), 'README missing from wheel'
+          print('Wheel contents OK:', len(names), 'files')
+          "
+
       - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
+        uses: pypa/gh-action-pypi-publish@v1.12.3
         with:
           packages-dir: packages/llm-test-harness-python/dist/

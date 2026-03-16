@@ -21,7 +21,8 @@
   "sideEffects": false,
   "files": [
     "dist",
-    "LICENSE"
+    "LICENSE",
+    "README.md"
   ],
   "scripts": {
     "build": "tsup",

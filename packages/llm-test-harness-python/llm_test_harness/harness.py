@@ -37,7 +37,7 @@ class Harness:
 
     def _store(self) -> CassetteStore:
         cassette_file = os.path.join(
-            self._config.cassettes_dir, f"{self._config.cassette_name}.yaml"
+            self._config.cassettes_dir, f"{self._config.cassette_name}.yml"
         )
         return CassetteStore(cassette_file)
 

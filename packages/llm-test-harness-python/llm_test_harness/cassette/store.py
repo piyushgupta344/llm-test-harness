@@ -1,7 +1,7 @@
 from __future__ import annotations
 
 import os
-from typing import Optional
+from typing import Any, Optional
 
 import yaml
 
@@ -20,8 +20,8 @@ from ..types import (
 )
 
 
-def _interaction_to_dict(i: CassetteInteraction) -> dict:
-    d: dict = {
+def _interaction_to_dict(i: CassetteInteraction) -> dict[str, Any]:
+    d: dict[str, Any] = {
         "id": i.id,
         "metadata": {
             "duration_ms": i.metadata.duration_ms,
@@ -65,7 +65,7 @@ def _interaction_to_dict(i: CassetteInteraction) -> dict:
         ]
 
     if i.response.usage is not None:
-        usage: dict = {}
+        usage: dict[str, Any] = {}
         if i.response.usage.input_tokens is not None:
             usage["input_tokens"] = i.response.usage.input_tokens
         if i.response.usage.output_tokens is not None:
@@ -83,7 +83,7 @@ def _interaction_to_dict(i: CassetteInteraction) -> dict:
     return d
 
 
-def _interaction_from_dict(d: dict) -> CassetteInteraction:
+def _interaction_from_dict(d: dict[str, Any]) -> CassetteInteraction:
     req_d = d["request"]
     resp_d = d["response"]
     meta_d = d["metadata"]

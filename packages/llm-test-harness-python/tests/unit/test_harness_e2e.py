@@ -63,7 +63,7 @@ class TestHarnessRecordReplay:
                 messages=[{"role": "user", "content": "Say hello."}],
             )
 
-            cassette_path = os.path.join(tmpdir, "cassette.yaml")
+            cassette_path = os.path.join(tmpdir, "cassette.yml")
             assert os.path.exists(cassette_path)
 
     def test_replay_returns_cassette_response(self) -> None:

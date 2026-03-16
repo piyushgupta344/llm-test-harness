@@ -43,6 +43,15 @@ dev = [
 [tool.hatch.build.targets.wheel]
 packages = ["llm_test_harness"]
 
+[tool.hatch.build.targets.sdist]
+include = [
+    "llm_test_harness/",
+    "tests/",
+    "README.md",
+    "CHANGELOG.md",
+    "LICENSE",
+]
+
 [tool.pytest.ini_options]
 testpaths = ["tests"]
 asyncio_mode = "auto"

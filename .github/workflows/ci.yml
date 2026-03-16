@@ -13,12 +13,11 @@ jobs:
   typescript:
     name: TypeScript (Node ${{ matrix.node }})
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     strategy:
       matrix:
         node: ["20", "22"]
-    defaults:
-      run:
-        working-directory: packages/llm-test-harness
 
     steps:
       - uses: actions/checkout@v4
@@ -36,13 +35,21 @@ jobs:
         run: pnpm install --frozen-lockfile
 
       - name: Type check
+        working-directory: packages/llm-test-harness
         run: pnpm typecheck
 
       - name: Test
+        working-directory: packages/llm-test-harness
         run: pnpm test
 
       - name: Build
+        working-directory: packages/llm-test-harness
         run: pnpm build
+
+      - name: Smoke test — pack output
+        working-directory: packages/llm-test-harness
+        run: |
+          pnpm pack --dry-run 2>&1 | grep -E "dist/|README|LICENSE"
 
   # ---------------------------------------------------------------------------
   # Python
@@ -50,6 +57,8 @@ jobs:
   python:
     name: Python ${{ matrix.python }}
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
     strategy:
       matrix:
         python: ["3.10", "3.11", "3.12"]
@@ -69,3 +78,12 @@ jobs:
 
       - name: Run tests
         run: pytest tests/ -v --tb=short
+
+      - name: Type check (mypy)
+        run: mypy llm_test_harness/
+
+      - name: Build distributions
+        run: |
+          pip install build
+          python -m build
+          ls dist/

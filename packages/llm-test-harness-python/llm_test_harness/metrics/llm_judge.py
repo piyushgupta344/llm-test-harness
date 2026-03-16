@@ -29,8 +29,10 @@ def _extract_json(raw: str) -> dict[str, Any]:
     # Find first {...} block
     match = re.search(r"\{[\s\S]*\}", raw)
     if match:
-        return json.loads(match.group())
-    return json.loads(raw)
+        result: dict[str, Any] = json.loads(match.group())
+        return result
+    result = json.loads(raw)
+    return result
 
 
 class LLMJudge(MetricFn):
