@@ -1,0 +1,39 @@
+name: Publish to PyPI
+
+on:
+  push:
+    tags:
+      - "py-v*"
+
+jobs:
+  publish:
+    name: Publish PyPI package
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write   # for Trusted Publishing (OIDC)
+
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install build tools
+        run: pip install build hatchling
+
+      - name: Run tests
+        working-directory: packages/llm-test-harness-python
+        run: |
+          pip install -e ".[dev]"
+          pytest tests/ -v --tb=short
+
+      - name: Build distribution
+        working-directory: packages/llm-test-harness-python
+        run: python -m build
+
+      - name: Publish to PyPI
+        uses: pypa/gh-action-pypi-publish@release/v1
+        with:
+          packages-dir: packages/llm-test-harness-python/dist/

@@ -1,0 +1,29 @@
+interactions:
+  - id: sha256:8b7df143d91c716ecdc0d3a0b5e5f6e7b8c9d0e1f2a3b4c5d6e7f8a9b0c1d2e3
+    metadata:
+      duration_ms: 423
+      provider_request_id: msg_01TestFixtureHello
+      recorded_at: '2026-03-16T11:09:00.000Z'
+    request:
+      messages:
+        - content: Say hello in one word.
+          role: user
+      model: claude-haiku-4-5-20251001
+      params:
+        max_tokens: 100
+        stop: null
+        temperature: 0.0
+        top_p: null
+      provider: anthropic
+      system: null
+      tools: null
+    response:
+      content:
+        - text: Hello!
+          type: text
+      stop_reason: end_turn
+      type: message
+      usage:
+        input_tokens: 14
+        output_tokens: 2
+version: 1

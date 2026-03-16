@@ -1,0 +1,66 @@
+[
+  {
+    "description": "Simple user message, no system, no tools",
+    "request": {
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "system": null,
+      "messages": [{ "role": "user", "content": "Say hello." }],
+      "params": { "max_tokens": 100, "temperature": 0, "top_p": null, "stop": null },
+      "tools": null
+    },
+    "expected_hash": "sha256:5698a0c7e3622a03f1539d199ea730cbdc044272306551ab3f2a1b54abf40c7f"
+  },
+  {
+    "description": "With system message",
+    "request": {
+      "provider": "anthropic",
+      "model": "claude-opus-4-6",
+      "system": "You are a helpful assistant.",
+      "messages": [{ "role": "user", "content": "What is 2+2?" }],
+      "params": { "max_tokens": 50, "temperature": 0, "top_p": null, "stop": null },
+      "tools": null
+    },
+    "expected_hash": "sha256:bbb980f6906eb841805bf564d8bacf96cf354ceb96780a3809d9e0ffecd9107f"
+  },
+  {
+    "description": "OpenAI provider",
+    "request": {
+      "provider": "openai",
+      "model": "gpt-4o",
+      "system": null,
+      "messages": [{ "role": "user", "content": "Say hello." }],
+      "params": { "max_tokens": 100, "temperature": 0, "top_p": null, "stop": null },
+      "tools": null
+    },
+    "expected_hash": "sha256:bca4f1e68eb5652607b46bcfd91cce82e56666b783d234569f9c1c636248b3de"
+  },
+  {
+    "description": "Multi-turn conversation",
+    "request": {
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "system": "You are a helpful assistant.",
+      "messages": [
+        { "role": "user", "content": "Hello" },
+        { "role": "assistant", "content": "Hi there!" },
+        { "role": "user", "content": "How are you?" }
+      ],
+      "params": { "max_tokens": 200, "temperature": 0, "top_p": null, "stop": null },
+      "tools": null
+    },
+    "expected_hash": "sha256:d299c21aa75432002f636d536505346419c2947ee7d78402c5d24f746f33b54b"
+  },
+  {
+    "description": "With stop sequences",
+    "request": {
+      "provider": "anthropic",
+      "model": "claude-haiku-4-5-20251001",
+      "system": null,
+      "messages": [{ "role": "user", "content": "List items:" }],
+      "params": { "max_tokens": 100, "temperature": 0, "top_p": null, "stop": ["\n\n", "END"] },
+      "tools": null
+    },
+    "expected_hash": "sha256:892bb22d5b5db95ea17ffeb7e026f12fb0c07e31bea096a877a2aa9d22e60c83"
+  }
+]
