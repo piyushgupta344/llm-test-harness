@@ -1,5 +1,5 @@
 {
-  "name": "llm-test-harness",
+  "name": "@piyushgupta344/llm-test-harness",
   "version": "0.1.0",
   "description": "Deterministic testing framework for LLM-powered apps — record/replay cassettes, eval scoring, regression testing",
   "type": "module",
