@@ -43,7 +43,13 @@ jobs:
 
       - name: Verify pack contents
         working-directory: packages/llm-test-harness
-        run: pnpm pack --dry-run 2>&1 | grep -E "dist/|README|LICENSE"
+        run: |
+          TARBALL=$(pnpm pack --pack-destination /tmp 2>/dev/null | tail -1)
+          echo "Packed: $TARBALL"
+          tar ztf "$TARBALL" | tee /tmp/pack-list.txt
+          grep -q "dist/" /tmp/pack-list.txt && echo "✓ dist/ present"
+          grep -q "README" /tmp/pack-list.txt && echo "✓ README present"
+          grep -q "LICENSE" /tmp/pack-list.txt && echo "✓ LICENSE present"
 
       - name: Publish
         working-directory: packages/llm-test-harness

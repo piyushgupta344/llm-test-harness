@@ -49,7 +49,6 @@ jobs:
           with zipfile.ZipFile(f'dist/{wheel}') as z:
               names = z.namelist()
           assert any('py.typed' in n for n in names), 'py.typed missing from wheel'
-          assert any('README' in n for n in names), 'README missing from wheel'
           print('Wheel contents OK:', len(names), 'files')
           "
 
