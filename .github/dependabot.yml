@@ -9,11 +9,14 @@ updates:
       actions:
         patterns: ["*"]
 
-  # TypeScript / npm (pnpm workspace)
+  # TypeScript / pnpm workspace
+  # versioning-strategy: lockfile-only keeps pnpm-lock.yaml consistent;
+  # without it Dependabot bumps package.json without regenerating the lockfile.
   - package-ecosystem: npm
     directory: /packages/llm-test-harness
     schedule:
       interval: weekly
+    versioning-strategy: lockfile-only
     groups:
       typescript-deps:
         patterns: ["*"]

@@ -9,8 +9,13 @@ export {
   Similarity,
   LLMJudge,
   Custom,
+  ToolCalled,
+  JsonPath,
+  NotEmpty,
+  WordCount,
 } from './metrics/index.js'
 export type { LLMJudgeOptions } from './metrics/index.js'
+export { Scrubbers } from './cassette/scrubbers.js'
 export { normalizedSimilarity } from './metrics/similarity.js'
 export { runEval } from './eval/evaluator.js'
 export { saveBaseline, compareBaseline } from './eval/baseline.js'

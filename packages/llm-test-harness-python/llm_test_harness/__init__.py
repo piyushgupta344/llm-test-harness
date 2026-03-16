@@ -10,16 +10,21 @@ from .errors import (
     UnsupportedClientError,
 )
 from .harness import Harness
+from .cassette.scrubbers import Scrubbers
 from .metrics import (
     Contains,
     ContainsAll,
     Custom,
     ExactMatch,
+    JsonPath,
     JSONSchema,
     LLMJudge,
     Metrics,
+    NotEmpty,
     Regex,
     Similarity,
+    ToolCalled,
+    WordCount,
 )
 from .metrics.similarity import normalized_similarity
 from .types import (
@@ -55,6 +60,11 @@ __all__ = [
     "LLMJudge",
     "Regex",
     "Similarity",
+    "ToolCalled",
+    "JsonPath",
+    "NotEmpty",
+    "WordCount",
+    "Scrubbers",
     "normalized_similarity",
     "evaluate",
     "save_baseline",
